@@ -1,8 +1,8 @@
-const fs = require('fs');
+const fs = require("fs");
 
 async function getDataFromDatabase() {
   return new Promise((resolve, reject) => {
-    fs.readFile('src/data/data.json', (err, data) => {
+    fs.readFile("src/data/data.json", (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -15,7 +15,7 @@ async function getDataFromDatabase() {
 async function saveDataToDatabase(data) {
   return new Promise((resolve, reject) => {
     const jsonData = JSON.stringify(data);
-    fs.writeFile('src/data/data.json', jsonData, (err) => {
+    fs.writeFile("src/data/data.json", jsonData, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -37,16 +37,14 @@ async function saveDataToDatabase(data) {
 
 */
 
-
 // Level 2: Get 7 Days Weather Forecast Data by Name
 async function getForecastDataByName(cityName) {
-  
-
-  // TODO: Implement this function
-  
+  const data = await getDataFromDatabase();
+  const forecastData = data.find((city) => city.city === cityName);
+  if (!forecastData) throw new Error("City not found");
+  return forecastData;
 }
 
-
 module.exports = {
-  getForecastDataByName
+  getForecastDataByName,
 };
